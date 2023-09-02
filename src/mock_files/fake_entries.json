@@ -6,7 +6,7 @@
         "start_time": "08:00",
         "end_time": "16:06",
         "working_time": 456,
-        "break_time": 30,
+        "break_time": "00:30",
         "entry_type": "w"
     },
     {
@@ -16,7 +16,7 @@
         "start_time": "08:00",
         "end_time": "16:06",
         "working_time": 456,
-        "break_time": 30,
+        "break_time": "00:30",
         "entry_type": "w"
     },
     {
@@ -26,7 +26,7 @@
         "start_time": "08:00",
         "end_time": "16:06",
         "working_time": 456,
-        "break_time": 30,
+        "break_time": "00:30",
         "entry_type": "w"
     },
     {
@@ -36,7 +36,7 @@
         "start_time": "08:00",
         "end_time": "16:06",
         "working_time": 456,
-        "break_time": 30,
+        "break_time": "00:30",
         "entry_type": "w"
     }
 ]
