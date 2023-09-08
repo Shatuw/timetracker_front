@@ -19,7 +19,7 @@ export default function ReactCalendar() {
     if (view === 'month') {
     //check if month of the day/tile is the same as displayed month/actual value.getMonth()       
       if (date.getMonth() === value.getMonth()) {
-        //create an ISO 8601 date-"string"
+        //create an ISO 8601 date-"string" with format() from datefns
         const dayTile = format(date, 'yyyy-MM-dd');
         //give the ISO-day to TimeForm-component to work with 
         return <TimeForm day={dayTile} date={date}/>;
