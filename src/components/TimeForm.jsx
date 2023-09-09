@@ -24,7 +24,7 @@ export default function TimeForm({ day, date }) {
         const data = {};
 
         for (const pair of new FormData(e.target).entries()) {
-            date[pair[0]] = pair[1];
+            data[pair[0]] = pair[1];
         };
 
         fetch("localhost:3000/days", { method: post, body: JSON.stringify(data) })
