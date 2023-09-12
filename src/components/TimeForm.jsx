@@ -21,28 +21,30 @@ export default function TimeForm({ day, date }) {
     //submit-button-press:
     function handleSubmit(e) {
         e.preventDefault();
+
+        // fetch("http://localhost:3000/days" ).then((response)=> response.json).then((data)=>console.log(data));
         const data = {};
 
         for (const pair of new FormData(e.target).entries()) {
             data[pair[0]] = pair[1];
         };
-        console.log(data)
+        // console.log(data)
         
-        fetch("localhost:3000/days", { method: "POST",headers: {
+        fetch("http://localhost:3000/days", { method: "POST",headers: {
             "Content-Type": "application/json",
-            // 'Content-Type': 'application/x-www-form-urlencoded',
+            
           }, body: JSON.stringify(data) })
           .then((response) => {
             if (!response.ok) {
-              throw new Error('Fehler bei der API-Anfrage');
+              throw new Error('Error in api-request');
             }
-            return response.json(); // Die API-Antwort in JSON umwandeln
+            return response.json(); 
           })
           .then((data) => {
-            console.log(data); // Mit den Daten aus der API-Antwort arbeiten
+            console.log(data); 
           })
           .catch((error) => {
-            console.error('Fehler:', error); // Fehlerbehandlung, falls die Anfrage fehlschlägt
+            console.error('Error:', error); 
           });
         
     };

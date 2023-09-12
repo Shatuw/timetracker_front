@@ -9,13 +9,15 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT ?? 3000;
 
-app.use(cors());
+app.use(cors({origin : "http://localhost:5173"}));
 
 app.get("/health", (req, res) => {
     res.send("ok");
 });
 
 app.use(express.json());
+
+app.get("/days", (req, res) => res.json({"key" : "jez ???"}));
 
 app.post("/days", (req, res) => {
     console.log("days-log");

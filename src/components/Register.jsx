@@ -11,8 +11,23 @@ export default function Register() {
         for (const pair of new FormData(event.target).entries()) {
             data[pair[0]] = pair[1];
         };
-        console.log(data)
-        fetch("localhost:3000/register", { method: "post", body: JSON.stringify(data) })
+        // console.log(data)
+        fetch("http://localhost:3000/register", { method: "POST",headers: {
+            "Content-Type": "application/json",
+            // 'Content-Type': 'application/x-www-form-urlencoded',
+          }, body: JSON.stringify(data) })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error('Error in API-request');
+            }
+            return response.json(); // convert api-response into json
+          })
+          .then((data) => {
+            console.log(data); // work the fetch-response -> send an alert/ a modal or do whatever
+          })
+          .catch((error) => {
+            console.error('Error:', error); // error-handling, when request goes wrong
+          });
   }
 
   return (
