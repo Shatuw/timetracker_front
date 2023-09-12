@@ -1,0 +1,3 @@
+//install VS-Code extension: "REST Client" to make requests directly in VS-Code (no Postman/Insomnia... anymore)
+
+GET http://localhost:3000/health

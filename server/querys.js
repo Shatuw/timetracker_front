@@ -1,0 +1,1 @@
+export const getDaysQuery = "SELECT * from days WHERE $1 = user_id"
