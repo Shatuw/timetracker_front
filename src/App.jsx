@@ -3,9 +3,9 @@ import './App.css';
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom';
 import Root from './components/Root.jsx';
 import Welcome from "./components/Welcome.jsx";
-//import Calender from './components/Calender.jsx';
 import ReactCalendar from './components/ReactCalender';
 import Register from './components/Register.jsx';
+
 function App() {
   
 const router = createBrowserRouter(createRoutesFromElements(

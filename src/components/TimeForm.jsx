@@ -26,8 +26,25 @@ export default function TimeForm({ day, date }) {
         for (const pair of new FormData(e.target).entries()) {
             data[pair[0]] = pair[1];
         };
-
-        fetch("localhost:3000/days", { method: post, body: JSON.stringify(data) })
+        console.log(data)
+        
+        fetch("localhost:3000/days", { method: "POST",headers: {
+            "Content-Type": "application/json",
+            // 'Content-Type': 'application/x-www-form-urlencoded',
+          }, body: JSON.stringify(data) })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error('Fehler bei der API-Anfrage');
+            }
+            return response.json(); // Die API-Antwort in JSON umwandeln
+          })
+          .then((data) => {
+            console.log(data); // Mit den Daten aus der API-Antwort arbeiten
+          })
+          .catch((error) => {
+            console.error('Fehler:', error); // Fehlerbehandlung, falls die Anfrage fehlschlägt
+          });
+        
     };
 
     return (
