@@ -1,7 +1,7 @@
 [
     {
         "id" : 1,
-        "email" : "richard.voigt@company.fake",
+        "email" : "max@mustermann.fake",
         "password" : "12345",
         "first_name" : "Richard",
         "last_name" : "Voigt",
