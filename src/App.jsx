@@ -1,5 +1,4 @@
 import React from 'react';
-import './App.css';
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom';
 import Root from './components/Root.jsx';
 import Welcome from "./components/Welcome.jsx";

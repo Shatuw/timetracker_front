@@ -62,7 +62,7 @@ app.get("/days", (_req, res) => {
 });
 
 app.get("/user", (_req, res) => {
-    res.json(user);
+    res.json(fake_user);
 });
 
 app.post("/days", (req, res) => {

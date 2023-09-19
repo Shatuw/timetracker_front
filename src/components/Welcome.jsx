@@ -31,6 +31,7 @@ export default function Welcome() {
             }); // convert api-response into json
           })
           .catch((error) => {
+            alert("Something went wrong.");
             console.error('Error:', error); // error-handling, when request goes wrong
           });
   }

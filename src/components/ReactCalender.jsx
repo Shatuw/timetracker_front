@@ -6,8 +6,8 @@ import { format } from 'date-fns';
 
 const weekend_days = [0, 6]
 
+//set clasName for all tiles/days to "tileBgc" ->custom class in index.css
 function tileClassName() {
-  //set clasName for all tiles/days to "tileBgc" ->custom class in App.css
   return "tileBgc";
 }
 
@@ -32,10 +32,11 @@ export default function ReactCalendar() {
       }),
     ])
 
+    //console.log(userRepsonse.json())
+    setEntries(await entriesResponse.json());
     setUser(await userRepsonse.json());
-    setEntries(await entriesResponse.json())
-    setIsLoading(false)
-  }
+    setIsLoading(false);
+  };
 
   useEffect(() => {
     fetchData()
@@ -51,17 +52,19 @@ export default function ReactCalendar() {
       if (date.getMonth() === value.getMonth()) {
         //create an ISO 8601 date-"string" with format() from datefns
         const day = format(date, 'yyyy-MM-dd');
+        
         const default_entry = {
           "id": null,
-          "user_id": user.id,
+          "user_id": user[0].id,
           "day": day,
-          "start_time": user.default_start_time,
-          "end_time": user.default_end_time,
-          "working_time": user.default_working_time,
-          "break_time": user.default_break_time,
+          "start_time": user[0].default_start_time,
+          "end_time": user[0].default_end_time,
+          "working_time": user[0].default_working_time,
+          "break_time": user[0].default_break_time,
           "entry_type": weekend_days.includes(date.getDay()) ? "f" : "w"
         }
         const entry = entries.find((entry) => entry.day === day) ?? default_entry;
+        
         //give the ISO-day to TimeForm-component to work with 
         return <TimeForm entry={entry} />;
       }
@@ -79,6 +82,7 @@ export default function ReactCalendar() {
   }
 
   return (
+    <div className='container mx-auto'>
     <Calendar
       onChange={onChange}
       value={value}
@@ -88,5 +92,6 @@ export default function ReactCalendar() {
       maxDetail='month'
       minDetail='year'
     />
+    </div>
   );
 }
