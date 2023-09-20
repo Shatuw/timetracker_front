@@ -1,8 +1,5 @@
 import React from 'react';
 
-
-
-
 export default function TimeForm({ entry }) {
     //submit-button-press:
     function handleSubmit(e) {

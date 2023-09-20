@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Calendar from 'react-calendar';
 import TimeForm from './TimeForm';
 import { format } from 'date-fns';
+import { intervalToString } from '../utils/helper.js';
 //import 'react-calendar/dist/Calendar.css';
 
 const weekend_days = [0, 6]
@@ -55,12 +56,12 @@ export default function ReactCalendar() {
         
         const default_entry = {
           "id": null,
-          "user_id": user[0].id,
+          "user_id": user.id,
           "day": day,
-          "start_time": user[0].default_start_time,
-          "end_time": user[0].default_end_time,
-          "working_time": user[0].default_working_time,
-          "break_time": user[0].default_break_time,
+          "start_time": user.default_start_time,
+          "end_time": user.default_end_time,
+          "working_time": intervalToString(user.default_working_time),
+          "break_time": intervalToString(user.default_break_time),
           "entry_type": weekend_days.includes(date.getDay()) ? "f" : "w"
         }
         const entry = entries.find((entry) => entry.day === day) ?? default_entry;
