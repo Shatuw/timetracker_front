@@ -4,19 +4,20 @@ export default function TimeForm({ entry }) {
     //submit-button-press:
     function handleSubmit(e) {
         e.preventDefault();
-
-        // fetch("http://localhost:3000/days" ).then((response)=> response.json).then((data)=>console.log(data));
+        //create and fill object with formdata
         const data = {};
-
         for (const pair of new FormData(e.target).entries()) {
             data[pair[0]] = pair[1];
         };
-        // console.log(data)
-
+        
+        //sending data to server (with some extra data in headers):
         fetch("http://localhost:3000/days", {
             method: "POST", headers: {
                 "Content-Type": "application/json",
-                authorization: sessionStorage.getItem("timetracker-session"),
+                authorization: sessionStorage.getItem("timetracker-session"),//send the jwt for authorization
+                user_id : entry.user_id,//send the user-id along with the formdata 
+                day : entry.day,//also send the actuel day of the tile
+                working_time: entry.working_time,//also send default working time from this user to count balance later
             }, body: JSON.stringify(data)
         })
             .then((response) => {

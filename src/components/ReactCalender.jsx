@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Calendar from 'react-calendar';
 import TimeForm from './TimeForm';
 import { format } from 'date-fns';
-import { intervalToString } from '../utils/helper.js';
+import { intervalToString, excludeSeconds } from '../utils/helper.js';
 //import 'react-calendar/dist/Calendar.css';
 
 const weekend_days = [0, 6]
@@ -23,7 +23,8 @@ export default function ReactCalendar() {
     const [entriesResponse, userRepsonse] = await Promise.all([
       fetch("http://localhost:3000/days", {
         headers: {
-          authorization: sessionStorage.getItem("timetracker-session")
+          authorization: sessionStorage.getItem("timetracker-session"),
+          actualmonth : format(value, 'yyyy-MM').toString(),
         }
       }),
       fetch("http://localhost:3000/user", {
@@ -36,11 +37,12 @@ export default function ReactCalendar() {
     //console.log(userRepsonse.json())
     setEntries(await entriesResponse.json());
     setUser(await userRepsonse.json());
-    setIsLoading(false);
+    setIsLoading(false);    
   };
 
   useEffect(() => {
     fetchData()
+    
   }, []);
 
   if (isLoading) {
@@ -58,12 +60,13 @@ export default function ReactCalendar() {
           "id": null,
           "user_id": user.id,
           "day": day,
-          "start_time": user.default_start_time,
-          "end_time": user.default_end_time,
+          "start_time": excludeSeconds(user.default_start_time),
+          "end_time": excludeSeconds(user.default_end_time),
           "working_time": intervalToString(user.default_working_time),
           "break_time": intervalToString(user.default_break_time),
           "entry_type": weekend_days.includes(date.getDay()) ? "f" : "w"
         }
+        //console.log(entries)
         const entry = entries.find((entry) => entry.day === day) ?? default_entry;
         
         //give the ISO-day to TimeForm-component to work with 
@@ -75,6 +78,7 @@ export default function ReactCalendar() {
   function handleActiveStartDateChange({ activeStartDate }) {
     //change valueState to the actual shown date/month
     setValue(activeStartDate);
+    console.log(entries);
   }
 
   function onChange(nextValue) {

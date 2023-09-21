@@ -3,12 +3,12 @@ import dotenv from "dotenv";
 import backendRoutes from "./routes.js";
 import cors from "cors";
 import jwt from "jsonwebtoken";
-import fake_user from "./mock_files/fake_user.json" assert { type: "json" };
+//import fake_user from "./mock_files/fake_user.json" assert { type: "json" };
 import fake_entries from "./mock_files/fake_entries.json" assert { type: "json" };
-import { regUser } from "./controllers.js";
+import { getDays, regUser, setDay } from "./controllers.js";
 import { pool } from "./database.js";
 import { getUserQuery, verifyUserQuery } from "./querys.js";
-// import { generateJwt } from "../src/utils/helper.js";
+
 
 //basic preperation-stuff:
 dotenv.config();
@@ -16,12 +16,12 @@ const app = express();
 const port = process.env.PORT ?? 3000;
 const secret = process.env.jwt_secret;
 app.use(cors({origin : "http://localhost:5173"}));
-app.get("/health", (req, res) => {
+app.get("/health", (_req, res) => {
     res.send("ok");
 });
 app.use(express.json());
 
-const generateJwt = (email) => jwt.sign({ email }, secret, { expiresIn : '600s' });
+const generateJwt = (email) => jwt.sign({ email }, secret, { expiresIn : '1800s' });
 
 //login-route to create a JWT and send it back
 app.post("/login", async (req, res) => {
@@ -53,8 +53,10 @@ app.use(async (req, res, next) => {
         if (!rows.length){
             return res.status(404).send("No valid login");
         }
+        
         //extend req-object with extra data for next routes
         req.currentUser =  rows[0]; 
+
     } catch (error) {
         console.error(error);
         return res.status(401).end();
@@ -62,8 +64,12 @@ app.use(async (req, res, next) => {
     next();
 })
 
-app.get("/days", (_req, res) => {
-  res.json(fake_entries);  
+app.get("/days", async (req, res) => {
+    console.log(req.headers.actualmonth)
+    const entries = await getDays(req.currentUser.id, req.headers.actualmonth);
+    //console.log(entries)  
+      res.json(entries);
+      //res.json(fake_entries);
 });
 
 app.get("/user", (req, res) => {
@@ -72,10 +78,15 @@ app.get("/user", (req, res) => {
     
 });
 
-app.post("/days", (req, res) => {
-    console.log("days-log");
-    console.log(req.body);
-    res.json(req.body)
+app.post("/days", async (req, res) => {
+    // store req.body along with req.headers.user_id in database
+    const dayData = req.body;
+    dayData['user_id'] = req.headers.user_id;
+    dayData[`day`]= req.headers.day;
+    dayData[`working_time`]= req.headers.working_time;
+    console.log(dayData);
+    setDay(dayData)
+    res.json("Data stored.")
 });
 
 app.use("/", backendRoutes)

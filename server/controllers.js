@@ -1,15 +1,32 @@
 import { pool } from "./database.js";
-import { getDaysQuery, regUserQuery } from "./querys.js";
+import { getDaysQuery, regUserQuery, setDayQuery } from "./querys.js";
+import { v4 as uuid } from "uuid" 
 
 
-export const getDays = (req, res) => {
-    const id = parseInt(req.params.id);
-    console.log(id);
-
-    pool.query(getDaysQuery, (error, results) => {
-        if (error) throw error;
-        res.status(200).json(results.rows);
-    });
+export const getDays = async (user_id, actualmonth) => {
+    
+    try {
+        const { rows } = await pool.query(getDaysQuery,[user_id, actualmonth] );
+        return rows;
+    } catch (error) {
+        console.error("Failed to get the day-entries for user: ", error);
+    }    
+};
+export const setDay = async ({
+    day,
+    start_time,
+    end_time,
+    working_time,
+    break_time,
+    entry_type,
+    user_id,
+}) => {
+    try {
+        const id = uuid();
+        await pool.query(setDayQuery, [day,start_time,end_time,working_time,break_time,entry_type,user_id,id])
+    } catch (error) {
+        console.error("Failed to insert new time-record in database: ", error);
+    }
 };
 
 export const regUser = async ({
@@ -21,7 +38,7 @@ export const regUser = async ({
     try {
         await pool.query(regUserQuery, [email, firstName, lastName, password]);
     } catch (error) {
-        console.error('Fehler beim Einfügen des Datensatzes:', error);
+        console.error('Failed to insert new user in database:', error);
     }
 
 }
