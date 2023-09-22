@@ -3,8 +3,6 @@ import dotenv from "dotenv";
 import backendRoutes from "./routes.js";
 import cors from "cors";
 import jwt from "jsonwebtoken";
-//import fake_user from "./mock_files/fake_user.json" assert { type: "json" };
-import fake_entries from "./mock_files/fake_entries.json" assert { type: "json" };
 import { getDays, regUser, setDay } from "./controllers.js";
 import { pool } from "./database.js";
 import { getUserQuery, verifyUserQuery } from "./querys.js";
