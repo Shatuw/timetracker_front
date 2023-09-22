@@ -11,7 +11,7 @@ export default function TimeForm({ entry }) {
         };
         
         //sending data to server (with some extra data in headers):
-        fetch("http://localhost:3000/days", {
+        fetch("https://tired-robe-bat.cyclic.cloud/days", {
             method: "POST", headers: {
                 "Content-Type": "application/json",
                 authorization: sessionStorage.getItem("timetracker-session"),//send the jwt for authorization

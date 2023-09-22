@@ -19,7 +19,7 @@ export default function Welcome() {
       login_data[pair[0]] = pair[1];
     };
 
-    fetch("http://localhost:3000/login", { method: "POST",headers: {
+    fetch("https://tired-robe-bat.cyclic.cloud/login", { method: "POST",headers: {
             "Content-Type": "application/json",
             // 'Content-Type': 'application/x-www-form-urlencoded',
           }, body: JSON.stringify(login_data) })

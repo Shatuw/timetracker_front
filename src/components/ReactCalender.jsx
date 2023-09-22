@@ -21,13 +21,13 @@ export default function ReactCalendar() {
   //todo: fetch with useLoader on the Route
   const fetchData = async () => {
     const [entriesResponse, userRepsonse] = await Promise.all([
-      fetch("http://localhost:3000/days", {
+      fetch("https://tired-robe-bat.cyclic.cloud/days", {
         headers: {
           authorization: sessionStorage.getItem("timetracker-session"),
           actualmonth : format(value, 'yyyy-MM').toString(),
         }
       }),
-      fetch("http://localhost:3000/user", {
+      fetch("https://tired-robe-bat.cyclic.cloud/user", {
         headers: {
           authorization: sessionStorage.getItem("timetracker-session")
         }

@@ -18,7 +18,7 @@ export default function Register() {
             data[pair[0]] = pair[1];
         };
         // console.log(data)
-        fetch("http://localhost:3000/register", { method: "POST",headers: {
+        fetch("https://tired-robe-bat.cyclic.cloud/register", { method: "POST",headers: {
             "Content-Type": "application/json",
             // 'Content-Type': 'application/x-www-form-urlencoded',
           }, body: JSON.stringify(data) })
