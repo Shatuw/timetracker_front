@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import {
   Card,
   Input,
-  Checkbox,
   Button,
   Typography,
 } from "@material-tailwind/react";
@@ -27,11 +26,15 @@ export default function Register() {
             if (!response.ok) {
               throw new Error('Error in API-request');
             }
-            return response.json(); // convert api-response into json
+            return response.json().then(({token}) => {
+              //console.log(token); // store date/jwt here in sessionStorage
+              sessionStorage.setItem('timetracker-session', token);
+              navigate('/timetracker');
+            }); // convert api-response into json; // convert api-response into json
           })
-          .then((data) => {
-            console.log(data); // work the fetch-response -> send an alert/ a modal or do whatever
-          })
+          // .then((data) => {
+          //   console.log(data); // work the fetch-response -> send an alert/ a modal or do whatever
+          // })
           .catch((error) => {
             console.error('Error:', error); // error-handling, when request goes wrong
           });
@@ -40,45 +43,28 @@ export default function Register() {
   return (
     <>
 
-    <Card className='w-96'>
+    <Card className='w-96 m-auto'>
       <Typography variant="h4" color="blue-gray">
         Sign Up
       </Typography>
       <Typography color="gray" className="mt-1 font-normal">
         Enter your details to register.
       </Typography>
-      <form className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96">
+      <form onSubmit={handleRegister} className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96 p-2">
         <div className="mb-4 flex flex-col gap-6">
-          <Input size="lg" label="Name" />
-          <Input size="lg" label="Email" />
-          <Input type="password" size="lg" label="Password" />
+          <Input size="lg" type="text" name="first_name" label="Firstname" required/>
+          <Input size="lg" type="text" name="last_name" label="Lastname" required/>
+          <Input size="lg" type="text" name="email" label="email" required/>
+          <Input type="text" size="lg" name="password" label="Password" required/>
         </div>
-        <Checkbox
-          label={
-            <Typography
-              variant="small"
-              color="gray"
-              className="flex items-center font-normal"
-            >
-              I agree the
-              <a
-                href="#"
-                className="font-medium transition-colors hover:text-gray-900"
-              >
-                &nbsp;Terms and Conditions
-              </a>
-            </Typography>
-          }
-          containerProps={{ className: "-ml-2.5" }}
-        />
-        <Button className="mt-6" fullWidth>
+        <Button type="submit" className="mt-6" fullWidth>
           Register
         </Button>
         <Typography color="gray" className="mt-4 text-center font-normal">
           Already have an account?{" "}
-          <a href="#" className="font-medium text-gray-900">
+          <Link to="/" className="font-medium text-gray-900">
             Sign In
-          </a>
+          </Link>
         </Typography>
       </form>
       </Card>

@@ -31,12 +31,12 @@ export const setDay = async ({
 
 export const regUser = async ({
     email,
-    firstName,
-    lastName,
+    first_name,
+    last_name,
     password,
 }) => {
     try {
-        await pool.query(regUserQuery, [email, firstName, lastName, password]);
+        await pool.query(regUserQuery, [email, first_name, last_name, password]);
     } catch (error) {
         console.error('Failed to insert new user in database:', error);
     }

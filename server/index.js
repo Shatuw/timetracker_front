@@ -65,11 +65,8 @@ app.use(async (req, res, next) => {
 })
 
 app.get("/days", async (req, res) => {
-    console.log(req.headers.actualmonth)
     const entries = await getDays(req.currentUser.id, req.headers.actualmonth);
-    //console.log(entries)  
-      res.json(entries);
-      //res.json(fake_entries);
+    res.json(entries);    
 });
 
 app.get("/user", (req, res) => {
@@ -84,7 +81,6 @@ app.post("/days", async (req, res) => {
     dayData['user_id'] = req.headers.user_id;
     dayData[`day`]= req.headers.day;
     dayData[`working_time`]= req.headers.working_time;
-    console.log(dayData);
     setDay(dayData)
     res.json("Data stored.")
 });

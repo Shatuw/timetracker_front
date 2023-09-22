@@ -6,7 +6,6 @@ export default function Root() {
         <div className='container mx-auto font-serif text-center'>
         <h1>Timetrackerproject</h1>
         <div>
-        <NavLink to="/">Login</NavLink>
         <NavLink to="/timetracker">Calendar</NavLink>
         </div>
             <Outlet />
