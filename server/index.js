@@ -13,7 +13,7 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT ?? 3000;
 const secret = process.env.jwt_secret;
-app.use(cors({origin : "http://localhost:5173"}));
+app.use(cors({origin : "https://rics-timetracker.netlify.app/"}));
 app.get("/health", (_req, res) => {
     res.send("ok");
 });
