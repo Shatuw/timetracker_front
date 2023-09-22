@@ -4,6 +4,7 @@ import Root from './components/Root.jsx';
 import Welcome from "./components/Welcome.jsx";
 import ReactCalendar from './components/ReactCalender';
 import Register from './components/Register.jsx';
+import { ThemeProvider } from "@material-tailwind/react";
 
 function App() {
   
@@ -15,9 +16,9 @@ const router = createBrowserRouter(createRoutesFromElements(
   </Route>
 ))
   return (
-    <>
+    <ThemeProvider>
       <RouterProvider router={router} />
-    </>
+    </ThemeProvider>
   )
 }
 
